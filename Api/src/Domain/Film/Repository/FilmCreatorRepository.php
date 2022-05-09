@@ -27,7 +27,7 @@ class FilmCreatorRepository
     /**
      * Insert user row.
      *
-     * @param array $user The user
+     * @param array $film The film
      *
      * @return int The new ID
      */

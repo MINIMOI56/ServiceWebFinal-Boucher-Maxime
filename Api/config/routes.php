@@ -26,5 +26,7 @@ return function (App $app) {
 
     // Modifie un film, par id
     $app->put('/modFilm/{id}', \App\Action\FilmUpdateAction::class);
+
+    $app->options('/{routes:.*}', \App\Action\PreflightAction::class);
 };
 

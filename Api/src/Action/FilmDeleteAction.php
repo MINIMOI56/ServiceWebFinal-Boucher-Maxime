@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class FilmDeleteAction
 {
-    private $userDeletor;
+    private $filmDeletor;
 
     public function __construct(FilmDeletor $filmDeletor)
     {

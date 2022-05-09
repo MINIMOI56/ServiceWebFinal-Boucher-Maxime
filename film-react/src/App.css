@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float: left;
+  width: 20%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.borderUrl
+{
+  border: 2px solid black;
+}
+
+.borderCard
+{
+  border: 2px solid black;
+}
+
+.background{
+  background-color: #222222;
+  text-align: center;
+}
+
+.text{
+  color: #FFFFFF;
+}
+
+.test{
+  overflow-y: auto;
+    max-height: 680px;
+}

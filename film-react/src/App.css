@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+body{
+  min-height: 100%;
+}
+
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
   float: left;
@@ -31,11 +35,22 @@
   text-align: center;
 }
 
+.formAjouterFilm{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
 .text{
   color: #FFFFFF;
 }
 
 .test{
   overflow-y: auto;
-    max-height: 680px;
+  max-height: 500px;
+}
+
+.form{
+  text-align: center;
 }

@@ -3,6 +3,7 @@ import Axios from "axios";
 import Header from "./Header";
 import ListFilm from "./ListFilm";
 import AjouterFilm from "./AjouterFilm";
+import UpdateFilm from "./UpdateFilm";
 
 
 
@@ -11,8 +12,16 @@ class Main extends React.Component {
     super(props);
     this.state = {
       films: [],
+      film: {
+        id: 0,
+        titre: "",
+        note: "",
+        imageUrl: "",
+      },
+      showFormModifier: false,
     };
 
+    this.updateFilm = this.updateFilm.bind(this);
     this.ajouterFilm = this.ajouterFilm.bind(this);
     this.supprimerFilm = this.supprimerFilm.bind(this);
   }
@@ -23,7 +32,6 @@ class Main extends React.Component {
         this.setState({
           films: response.data,
         });
-        console.log(this.state.films);
       }
       )
       .catch((error) => {
@@ -31,6 +39,35 @@ class Main extends React.Component {
       }
       );
   }
+
+
+  setUpdateFilm = (film) => {
+    this.setState({ film: film, showFormModifier: true });
+  }
+
+
+  updateFilm(film) {
+    Axios.put("http://localhost/ServiceWebFinal-Boucher-Maxime/Api/modFilm/" + film.id, {
+      titre: film.titre,
+      note: film.note,
+      imageUrl: film.imageUrl
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          const vieuxfilms = this.state.films.filter(f => f.id !== film.id);
+          this.setState({ films: [...vieuxfilms, film] });
+          this.setState({
+            showFormModifier: false,
+          });
+        }
+      }
+      )
+      .catch((error) => {
+        console.log(error);
+      }
+      );
+  }
+
 
   ajouterFilm(film) {
     Axios.post("http://localhost/ServiceWebFinal-Boucher-Maxime/Api/film", {
@@ -65,9 +102,12 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-        <AjouterFilm ajouterFilm={this.ajouterFilm} />
+        <div style={{ display: "flex", alignContent: "center", alignItems: "center", justifyContent: "center", flexDirection: "row" }}>
+          <UpdateFilm updateFilm={this.updateFilm} film={this.state.film} showFormModifier={this.state.showFormModifier} />
+          <AjouterFilm ajouterFilm={this.ajouterFilm} />
+        </div>
         <Header />
-        <ListFilm supprimerFilm={this.supprimerFilm} films={this.state.films} />
+        <ListFilm supprimerFilm={this.supprimerFilm} setUpdateFilm={this.setUpdateFilm} films={this.state.films} showFormModifier={this.state.showFormModifier} />
       </div>
     );
   }

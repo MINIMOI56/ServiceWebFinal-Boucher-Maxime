@@ -1,13 +1,15 @@
+import { ThirtyFpsSelect } from '@mui/icons-material';
 import React from 'react';
 
-class AjouterFilm extends React.Component {
+class UpdateFilm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            titre: '',
-            note: '',
-            imageUrl: '',
+            id: this.props.film.id,
+            titre: this.props.film.titre,
+            note: this.props.film.note,
+            imageUrl: this.props.film.imageUrl,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -15,10 +17,27 @@ class AjouterFilm extends React.Component {
         this.clearInput = this.clearInput.bind(this);
     }
 
+    componentDidUpdate() {
+        if (this.props.film != null && this.props.film.id != this.state.id) {
+            this.setState({
+                id: this.props.film.id,
+                titre: this.props.film.titre,
+                note: this.props.film.note,
+                imageUrl: this.props.film.imageUrl,
+            });
+        }
+
+        if (!this.props.showFormModifier){
+            this.disableForm();
+        }else{
+            this.enableForm();
+        }
+    }
+
     handleChange(event) {
         const name = event.target.name;
         const value = event.target.value;
-    
+
         this.setState({
             [name]: value
         });
@@ -26,18 +45,20 @@ class AjouterFilm extends React.Component {
 
     handleSubmit(event) {
         const film = {
+            id: this.state.id,
             titre: this.state.titre,
             note: this.state.note,
             imageUrl: this.state.imageUrl,
         };
-        this.props.ajouterFilm(film);
-        
+        this.props.updateFilm(film);
+
         event.preventDefault();
         this.clearInput();
     }
 
     clearInput() {
         this.setState({
+            id: '',
             titre: '',
             note: '',
             imageUrl: '',
@@ -45,12 +66,23 @@ class AjouterFilm extends React.Component {
     }
 
 
-    render(){
+    disableForm() {
+        document.getElementById('formUpdateFilm').style.display = 'none';
+        document.getElementById('formAjouterFilm').style.display = 'block';
+    }
+
+
+    enableForm() {
+        document.getElementById('formUpdateFilm').style.display = 'block';
+        document.getElementById('formAjouterFilm').style.display = 'none';
+    }
+
+    render() {
 
         return (
-            <div id='formAjouterFilm' className='formAjouterFilm'>
-            
-                <h2>Ajouter un Film</h2>
+            <div id='formUpdateFilm' className='formUpdateFilm'>
+
+                <h2>Updater le film sélectionné</h2>
 
                 <form onSubmit={this.handleSubmit}>
 
@@ -97,19 +129,19 @@ class AjouterFilm extends React.Component {
 
                             <tr>
                                 <td></td>
-                                <td style={{'textAlign':'right'}}>
-                                    <input type="button" value="Cancel" onClick={this.clearInput}/>
-                                    <input type="submit" value="Ajouter" />
+                                <td style={{ 'textAlign': 'right' }}>
+                                    <input id='buttonCancel' type="button" value="Cancel" onClick={this.clearInput} />
+                                    <input id='buttonModifier' type="submit" value="Modifier" />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    
-                    
+
+
                 </form>
             </div>
         );
     }
 }
 
-export default (AjouterFilm);
+export default (UpdateFilm);

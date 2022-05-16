@@ -25,6 +25,12 @@ body{
   border: 2px solid black;
 }
 
+.borderApiWeather
+{
+  border: 2px solid black;
+  background-color: #222222;
+}
+
 .borderCard
 {
   border: 2px solid black;
@@ -46,11 +52,18 @@ body{
   color: #FFFFFF;
 }
 
-.test{
+.scroll{
   overflow-y: auto;
-  max-height: 500px;
+  max-height: 750px;
 }
 
 .form{
   text-align: center;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+

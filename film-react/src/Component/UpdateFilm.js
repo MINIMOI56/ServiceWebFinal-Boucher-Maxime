@@ -130,7 +130,6 @@ class UpdateFilm extends React.Component {
                             <tr>
                                 <td></td>
                                 <td style={{ 'textAlign': 'right' }}>
-                                    <input id='buttonCancel' type="button" value="Cancel" onClick={this.clearInput} />
                                     <input id='buttonModifier' type="submit" value="Modifier" />
                                 </td>
                             </tr>

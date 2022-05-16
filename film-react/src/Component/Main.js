@@ -27,7 +27,7 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    Axios.get("http://localhost/ServiceWebFinal-Boucher-Maxime/Api/film")
+    Axios.get("https://thawing-meadow-99678.herokuapp.com/film")
       .then((response) => {
         this.setState({
           films: response.data,
@@ -47,7 +47,7 @@ class Main extends React.Component {
 
 
   updateFilm(film) {
-    Axios.put("http://localhost/ServiceWebFinal-Boucher-Maxime/Api/modFilm/" + film.id, {
+    Axios.put("https://thawing-meadow-99678.herokuapp.com/modFilm/" + film.id, {
       titre: film.titre,
       note: film.note,
       imageUrl: film.imageUrl
@@ -70,7 +70,7 @@ class Main extends React.Component {
 
 
   ajouterFilm(film) {
-    Axios.post("http://localhost/ServiceWebFinal-Boucher-Maxime/Api/film", {
+    Axios.post("https://thawing-meadow-99678.herokuapp.com/film", {
       titre: film.titre,
       note: film.note,
       imageUrl: film.imageUrl,
@@ -88,7 +88,7 @@ class Main extends React.Component {
 
 
   supprimerFilm(id) {
-    Axios.delete("http://localhost/ServiceWebFinal-Boucher-Maxime/Api/delFilm/" + id)
+    Axios.delete("https://thawing-meadow-99678.herokuapp.com/delFilm/" + id)
       .then(res => {
         if (res.status === 200) {
           const vieuxfilms = this.state.films.filter(film => film.id !== id);

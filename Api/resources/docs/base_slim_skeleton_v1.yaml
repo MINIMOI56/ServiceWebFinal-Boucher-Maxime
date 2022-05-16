@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Base-Slim-Skeleton
+  title: Api de Film
   description: Structure de base d'un api créé dans le cadre du cours Services Web H2022
   
-servers: 
-  - url: http://localhost/base-slim-skeleton
+servers:
+  - url: http://localhost/ServiceWebFinale-Boucher-Maxime/API/
 paths:
   /:
     get:
@@ -13,8 +13,8 @@ paths:
         - Général
       summary: Message de bienvenue
       responses:
-        '200': 
-          description: 
+        '200':
+          description: Affiche un message de bienvenue
           content:
             application/json:
               schema:
@@ -25,38 +25,150 @@ paths:
                   message:
                     type: string
                 example:
-                    success: true
-                    message : 'Hello world!'
-  
-  /users:
+                  success: true
+                  message: Hello world!
+  /film:
     post:
-      tags: 
-        - Usagers
-      summary: Création d'un usager.
+      tags:
+        - Films
+      summary: Création d'un film.
       requestBody:
-        description: Les informations de l'usager à créer
+        description: Les informations du film à créer
         required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                username:
+                titre:
                   type: string
-                first_name:
+                imageUrl:
                   type: string
-                last_name:
-                  type: string
-                email:
-                  type: string
+                note:
+                  type: int
               example:
-                username : 'mathF'
-                first_name: 'Mathieu'
-                last_name: 'Fréchette'
-                email: 'frechette.mathieu@cegepvicto.ca'
+                titre: Avatar
+                imageUrl: MonUrl.png
+                note: '10'
       responses:
-        '201': 
+        '201':
           description: Le id de l'usager créé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  film_id:
+                    type: integer
+                example:
+                  id: '1'
+    get:
+      tags:
+        - Films
+      summary: Liste l'ensemble des films.
+      responses:
+        '201':
+          description: La liste de film créé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  film_id:
+                    type: integer
+                example:
+                  - id: '1'
+                    titre: test
+                    imageUrl: test.png
+                    note: '1'
+                  - id: '3'
+                    titre: test2
+                    imageUrl: test2.png
+                    note: '2'
+  /film/{id}:
+    get:
+      tags:
+        - Films
+      summary: Informations d'un film.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Identifiant d'un film
+      responses:
+        '201':
+          description: Les informations du film demandées
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  film_id:
+                    type: integer
+                example:
+                  - id: '1'
+                    titre: test
+                    imageUrl: test.png
+                    note: '1'
+  /delFilm/{id}:
+    delete:
+      tags:
+        - Films
+      summary: Supprime un film.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Identifiant du film
+      responses:
+        '201':
+          description: Un booléen représentant la réussite de l'opération
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  film_id:
+                    type: integer
+                example:
+                  - result: true
+  /modFilm/{id}:
+    put:
+      tags:
+        - Films
+      summary: Modification d'un film.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Identifiant du film
+      requestBody:
+        description: Les informations du film à modifier
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titre:
+                  type: string
+                imageUrl:
+                  type: string
+                note:
+                  type: int
+              example:
+                titre: Avatar
+                imageUrl: MonUrl.png
+                note: '10'
+      responses:
+        '201':
+          description: Un booléen représentant la réussite de l'opération
           content:
             application/json:
               schema:
@@ -65,5 +177,4 @@ paths:
                   user_id:
                     type: integer
                 example:
-                  id : 1
-  
+                  - result: true
